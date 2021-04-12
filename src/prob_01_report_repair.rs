@@ -1,13 +1,26 @@
 /// https://adventofcode.com/2020/day/1
-pub fn report_repair(expenses: Vec<u32>) -> Result<u32, ()> {
-    for e1 in &expenses {
-        for e2 in &expenses {
-            if e1 + e2 == 2020 {
-                return Ok(e1 * e2);
-            }
+pub fn report_repair(expenses: Vec<u32>) -> Result<u32, &'static str> {
+    let mut expenses = expenses;
+    expenses.sort();
+
+    let mut fit = expenses.iter();
+    let mut rit = expenses.iter().rev();
+
+    let mut fi = fit.next();
+    let mut ri = rit.next();
+    while let (Some(i), Some(j)) = (fi, ri) {
+        if i > j {
+            break;
+        }
+        if i + j == 2020 {
+            return Ok(i * j);
+        } else if i + j > 2020 {
+            ri = rit.next();
+        } else {
+            fi = fit.next();
         }
     }
-    Err(())
+    Err("No answer found")
 }
 
 #[cfg(test)]
