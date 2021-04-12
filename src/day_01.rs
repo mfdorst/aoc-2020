@@ -1,9 +1,10 @@
+use itertools::Itertools;
+
 /// https://adventofcode.com/2020/day/1
 pub fn part_1(expenses: Vec<u32>) -> u32 {
-    let mut expenses = expenses;
-    expenses.sort();
     let (x, y) = expenses
         .iter()
+        .sorted()
         .map(|x| expenses.iter().map(move |y| (x, y)))
         .flatten()
         .filter(|(&x, &y)| x + y == 2020)
@@ -14,11 +15,9 @@ pub fn part_1(expenses: Vec<u32>) -> u32 {
 
 /// https://adventofcode.com/2020/day/1#part2
 pub fn part_2(expenses: Vec<u32>) -> u32 {
-    let mut expenses = expenses;
-    expenses.sort();
-
     let (x, y, z) = expenses
         .iter()
+        .sorted()
         .map(|x| expenses.iter().map(move |y| (x, y)))
         .flatten()
         .filter(|(&x, &y)| x + y <= 2020)
